@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/pv_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,9:16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_camera_switch"
+        app:layout_constraintEnd_toEndOf="@id/pv_preview"
+        app:layout_constraintTop_toTopOf="@id/pv_preview"
+        tools:ignore="ContentDescription" />
+
+    <com.github.hueyra.mediax.widget.MediaPrevView
+        android:id="@+id/mpv_prev"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#000"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/pv_preview"
+        app:layout_constraintEnd_toEndOf="@id/pv_preview"
+        app:layout_constraintStart_toStartOf="@id/pv_preview"
+        app:layout_constraintTop_toTopOf="@id/pv_preview" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/pv_preview"
+        app:layout_constraintEnd_toEndOf="@id/pv_preview"
+        app:layout_constraintStart_toStartOf="@id/pv_preview"
+        app:layout_constraintTop_toTopOf="@id/pv_preview">
+
+        <com.github.hueyra.mediax.widget.FocusView
+            android:id="@+id/fv_focus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+    <com.github.hueyra.mediax.widget.CaptureLayout
+        android:id="@+id/cl_capture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="@id/pv_preview" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

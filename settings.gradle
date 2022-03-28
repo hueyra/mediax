@@ -1,0 +1,3 @@
+rootProject.name = "mediax"
+include ':app'
+include ':library'

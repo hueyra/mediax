@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="8dp"
+            android:scaleType="fitEnd"
+            android:src="@mipmap/picture_icon_images_edit"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/ivPlay"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/picture_icon_video_play"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/viewBorder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/picture_preview_gallery_border_bg" />
+    </FrameLayout>
+</FrameLayout>
