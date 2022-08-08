@@ -18,6 +18,7 @@ import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -74,6 +75,7 @@ public class WxCameraActivity extends AppCompatActivity {
     private FocusView mFocusView;
     private ImageView mCameraSwitch;
     private PreviewView mPreviewView;
+    private TextView mCameraErrorInfo;
     private CaptureLayout mCaptureLayout;
     private MediaPrevView mMediaPrevView;
 
@@ -122,6 +124,7 @@ public class WxCameraActivity extends AppCompatActivity {
         mPreviewView = findViewById(R.id.pv_preview);
         mCameraSwitch = findViewById(R.id.iv_switch);
         mMediaPrevView = findViewById(R.id.mpv_prev);
+        mCameraErrorInfo = findViewById(R.id.tv_error);
         mCaptureLayout = findViewById(R.id.cl_capture);
         mFocusView = findViewById(R.id.fv_focus);
         //
@@ -457,17 +460,15 @@ public class WxCameraActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             //
-            if (mUserOpenCameraType == Config.BUTTON_STATE_BOTH) {
-                if (mCurrentUseCaseMode == Config.BUTTON_STATE_BOTH) {
-                    mCurrentUseCaseMode = Config.BUTTON_STATE_ONLY_CAPTURE;
-                    bindCameraUseCases();
-                } else {
-                    Toast.makeText(WxCameraActivity.this, "摄像头初始化失败，请使用手机内置拍照软件...", Toast.LENGTH_SHORT).show();
-                }
+            if (mCurrentUseCaseMode != Config.BUTTON_STATE_ONLY_CAPTURE) {
+                mCurrentUseCaseMode = Config.BUTTON_STATE_ONLY_CAPTURE;
+                mCameraErrorInfo.setVisibility(View.GONE);
+                bindCameraUseCases();
             } else {
-                Toast.makeText(WxCameraActivity.this, "摄像头初始化失败，请使用手机内置拍照软件...", Toast.LENGTH_SHORT).show();
+                mCameraErrorInfo.setVisibility(View.VISIBLE);
+                //Toast.makeText(WxCameraActivity.this, "摄像头初始化失败", Toast.LENGTH_SHORT).show();
             }
-            Log.e(TAG, "Use case binding failed -> " + e.getMessage());
+            //Log.e(TAG, "Use case binding failed -> " + e.getMessage());
         }
     }
 

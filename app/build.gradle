@@ -43,5 +43,6 @@ dependencies {
 
     implementation project(':library')
     //implementation 'com.github.hueyra:WxCameraView:1.0.0'
+    //implementation 'com.github.hueyra:mediax:1.0.0'
     implementation 'com.guolindev.permissionx:permissionx:1.6.1'
 }

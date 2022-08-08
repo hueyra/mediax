@@ -19,7 +19,7 @@ class App : Application(), IMediaXApp {
 
     override fun onCreate() {
         super.onCreate()
-        MediaXAppInitializer.getInstance().setup(this)
+        MediaXAppInitializer.getInstance().init(this)
     }
 
     override fun getAppContext(): Context {

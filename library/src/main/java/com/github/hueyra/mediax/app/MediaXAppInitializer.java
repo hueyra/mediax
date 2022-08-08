@@ -40,8 +40,10 @@ public class MediaXAppInitializer implements IMediaXApp {
         return mInstance;
     }
 
-
-    public void setup(IMediaXApp app) {
+    /**
+     * 初始化IMediaXApp
+     */
+    public void init(IMediaXApp app) {
         this.mediaXApp = app;
     }
 

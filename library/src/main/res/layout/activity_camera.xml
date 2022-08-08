@@ -16,6 +16,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="摄像头初始化失败[C021]"
+        android:textColor="#fff"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/pv_preview"
+        app:layout_constraintEnd_toEndOf="@id/pv_preview"
+        app:layout_constraintStart_toStartOf="@id/pv_preview"
+        app:layout_constraintTop_toTopOf="@id/pv_preview" />
+
     <ImageView
         android:id="@+id/iv_switch"
         android:layout_width="wrap_content"

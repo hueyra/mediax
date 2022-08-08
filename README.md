@@ -21,7 +21,7 @@ allprojects {
 
 ```
 dependencies {
-	 implementation 'com.github.hueyra:mediax:1.0.0'
+	 implementation 'com.github.hueyra:mediax:1.1.0'
 }
 ```
 
@@ -33,6 +33,8 @@ dependencies {
 
 ```
  for kt.
+ 
+ MediaXAppInitializer.getInstance().init(this)
  
  val mediaX = MediaX.Builder()
                     .both()
