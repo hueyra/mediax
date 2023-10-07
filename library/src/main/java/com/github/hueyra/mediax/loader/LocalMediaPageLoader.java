@@ -1,5 +1,6 @@
-package com.github.hueyra.mediax.model;
+package com.github.hueyra.mediax.loader;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -42,6 +43,8 @@ public final class LocalMediaPageLoader {
     private static final String COLUMN_COUNT = "count";
     private static final String COLUMN_BUCKET_ID = "bucket_id";
     private static final String COLUMN_BUCKET_DISPLAY_NAME = "bucket_display_name";
+    private static final String COLUMN_DURATION = "duration";
+    private static final String COLUMN_ORIENTATION = "orientation";
 
     /**
      * Filter out recordings that are less than 500 milliseconds long
@@ -156,12 +159,24 @@ public final class LocalMediaPageLoader {
             MediaStore.MediaColumns.MIME_TYPE};
 
     private static final String[] PROJECTION = {
+//            MediaStore.Files.FileColumns._ID,
+//            MediaStore.MediaColumns.DATA,
+//            COLUMN_BUCKET_ID,
+//            COLUMN_BUCKET_DISPLAY_NAME,
+//            MediaStore.MediaColumns.MIME_TYPE,
+//            "COUNT(*) AS " + COLUMN_COUNT};
             MediaStore.Files.FileColumns._ID,
             MediaStore.MediaColumns.DATA,
-            COLUMN_BUCKET_ID,
-            COLUMN_BUCKET_DISPLAY_NAME,
             MediaStore.MediaColumns.MIME_TYPE,
-            "COUNT(*) AS " + COLUMN_COUNT};
+            MediaStore.MediaColumns.WIDTH,
+            MediaStore.MediaColumns.HEIGHT,
+            COLUMN_DURATION,
+            MediaStore.MediaColumns.SIZE,
+            COLUMN_BUCKET_DISPLAY_NAME,
+            MediaStore.MediaColumns.DISPLAY_NAME,
+            COLUMN_BUCKET_ID,
+            MediaStore.MediaColumns.DATE_ADDED,
+            COLUMN_ORIENTATION};
 
     /**
      * Media file database field
@@ -188,7 +203,7 @@ public final class LocalMediaPageLoader {
         Cursor data = null;
         try {
             if (SdkVersionUtils.checkedAndroid_R()) {
-                Bundle queryArgs = MediaUtils.createQueryArgsBundle(getPageSelection(bucketId), getPageSelectionArgs(bucketId), 1, 0);
+                Bundle queryArgs = MediaUtils.createQueryArgsBundle(getPageSelection(bucketId), getPageSelectionArgs(bucketId), 1, 0, ORDER_BY);
                 data = mContext.getContentResolver().query(QUERY_URI, new String[]{
                         MediaStore.Files.FileColumns._ID,
                         MediaStore.MediaColumns.DATA}, queryArgs, null);
@@ -257,14 +272,15 @@ public final class LocalMediaPageLoader {
             public MediaData doInBackground() {
                 Cursor data = null;
                 try {
-                    //TODO SDK R error
-//                    if (SdkVersionUtils.checkedAndroid_R()) {
-//                        Bundle queryArgs = MediaUtils.createQueryArgsBundle(getPageSelection(bucketId), getPageSelectionArgs(bucketId), limit, (page - 1) * pageSize);
-//                        data = mContext.getContentResolver().query(QUERY_URI, PROJECTION_PAGE, queryArgs, null);
-//                    } else {
-                    String orderBy = page == -1 ? MediaStore.Files.FileColumns._ID + " DESC" : MediaStore.Files.FileColumns._ID + " DESC limit " + limit + " offset " + (page - 1) * pageSize;
-                    data = mContext.getContentResolver().query(QUERY_URI, PROJECTION_PAGE, getPageSelection(bucketId), getPageSelectionArgs(bucketId), orderBy);
-                    //  }
+                    if (SdkVersionUtils.checkedAndroid_R()) {
+                        Bundle queryArgs = MediaUtils.createQueryArgsBundle(getPageSelection(bucketId), getPageSelectionArgs(bucketId), pageSize, (page - 1) * pageSize, ORDER_BY);
+                        data = mContext.getContentResolver().query(QUERY_URI, PROJECTION, queryArgs, null);
+                    } else {
+                        String orderBy = page == -1 ? MediaStore.Files.FileColumns._ID + " DESC" : MediaStore.Files.FileColumns._ID + " DESC limit " + limit + " offset " + (page - 1) * pageSize;
+                        data = mContext.getContentResolver().query(QUERY_URI, PROJECTION_PAGE, getPageSelection(bucketId), getPageSelectionArgs(bucketId), orderBy);
+                    }
+
+
                     if (data != null) {
                         List<LocalMedia> result = new ArrayList<>();
                         if (data.getCount() > 0) {
@@ -382,6 +398,7 @@ public final class LocalMediaPageLoader {
      *
      * @param listener
      */
+    @SuppressLint("Range")
     public void loadAllMedia(OnQueryDataResultListener<LocalMediaFolder> listener) {
         PictureThreadUtils.executeByIo(new PictureThreadUtils.SimpleTask<List<LocalMediaFolder>>() {
             @Override
@@ -496,6 +513,7 @@ public final class LocalMediaPageLoader {
      * @param cursor
      * @return
      */
+    @SuppressLint("Range")
     private static String getFirstUri(Cursor cursor) {
         long id = cursor.getLong(cursor.getColumnIndex(MediaStore.Files.FileColumns._ID));
         return getRealPathAndroid_Q(id);
@@ -507,6 +525,7 @@ public final class LocalMediaPageLoader {
      * @param cursor
      * @return
      */
+    @SuppressLint("Range")
     private static String getFirstUrl(Cursor cursor) {
         return cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DATA));
     }

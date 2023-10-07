@@ -33,7 +33,7 @@ import com.github.hueyra.mediax.entity.LocalMediaFolder;
 import com.github.hueyra.mediax.immersive.ImmersiveManage;
 import com.github.hueyra.mediax.immersive.NavBarUtils;
 import com.github.hueyra.mediax.language.PictureLanguageUtils;
-import com.github.hueyra.mediax.model.LocalMediaPageLoader;
+import com.github.hueyra.mediax.loader.LocalMediaPageLoader;
 import com.github.hueyra.mediax.other.PictureContextWrapper;
 import com.github.hueyra.mediax.permissions.PermissionChecker;
 import com.github.hueyra.mediax.thread.PictureThreadUtils;

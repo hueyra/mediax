@@ -1,5 +1,6 @@
 package com.github.hueyra.mediax.tools;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -26,6 +27,9 @@ import java.io.InputStream;
 import java.util.Objects;
 
 public class MediaUtils {
+    private static final String ORDER_BY = MediaStore.Files.FileColumns._ID + " DESC";
+    //---------------
+
     /**
      * 创建一条图片地址uri,用于保存拍照后的照片
      *
@@ -340,6 +344,7 @@ public class MediaUtils {
      *
      * @return
      */
+    @SuppressLint("Range")
     public static int getDCIMLastImageId(Context context) {
         Cursor data = null;
         try {
@@ -349,7 +354,7 @@ public class MediaUtils {
             //定义selectionArgs：
             String[] selectionArgs = {absolutePath + "%"};
             if (SdkVersionUtils.checkedAndroid_R()) {
-                Bundle queryArgs = MediaUtils.createQueryArgsBundle(selection, selectionArgs, 1, 0);
+                Bundle queryArgs = MediaUtils.createQueryArgsBundle(selection, selectionArgs, 1, 0, ORDER_BY);
                 data = context.getApplicationContext().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, queryArgs, null);
             } else {
                 String orderBy = MediaStore.Files.FileColumns._ID + " DESC limit 1 offset 0";
@@ -379,6 +384,7 @@ public class MediaUtils {
      *
      * @return
      */
+    @SuppressLint("Range")
     public static long getCameraFirstBucketId(Context context) {
         Cursor data = null;
         try {
@@ -388,7 +394,7 @@ public class MediaUtils {
             //定义selectionArgs：
             String[] selectionArgs = {absolutePath + "%"};
             if (SdkVersionUtils.checkedAndroid_R()) {
-                Bundle queryArgs = MediaUtils.createQueryArgsBundle(selection, selectionArgs, 1, 0);
+                Bundle queryArgs = MediaUtils.createQueryArgsBundle(selection, selectionArgs, 1, 0, ORDER_BY);
                 data = context.getApplicationContext().getContentResolver().query(MediaStore.Files.getContentUri("external"), null, queryArgs, null);
             } else {
                 String orderBy = MediaStore.Files.FileColumns._ID + " DESC limit 1 offset 0";
@@ -625,15 +631,15 @@ public class MediaUtils {
      * @param offset
      * @return
      */
-    public static Bundle createQueryArgsBundle(String selection, String[] selectionArgs, int limitCount, int offset) {
+    public static Bundle createQueryArgsBundle(String selection, String[] selectionArgs, int limitCount, int offset, String orderBy) {
         Bundle queryArgs = new Bundle();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             queryArgs.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, selection);
             queryArgs.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, selectionArgs);
-            queryArgs.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, MediaStore.Files.FileColumns._ID + " DESC");
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//                queryArgs.putString(ContentResolver.QUERY_ARG_SQL_LIMIT, limitCount + " offset " + offset);
-//            }
+            queryArgs.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, orderBy);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                queryArgs.putString(ContentResolver.QUERY_ARG_SQL_LIMIT, limitCount + " offset " + offset);
+            }
         }
         return queryArgs;
     }

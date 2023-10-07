@@ -29,7 +29,7 @@ import com.github.hueyra.mediax.config.PictureMimeType;
 import com.github.hueyra.mediax.config.PictureSelectionConfig;
 import com.github.hueyra.mediax.entity.LocalMedia;
 import com.github.hueyra.mediax.listener.OnQueryDataResultListener;
-import com.github.hueyra.mediax.model.LocalMediaPageLoader;
+import com.github.hueyra.mediax.loader.LocalMediaPageLoader;
 import com.github.hueyra.mediax.observable.ImagesObservable;
 import com.github.hueyra.mediax.tools.AttrsUtils;
 import com.github.hueyra.mediax.tools.MediaUtils;

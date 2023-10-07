@@ -23,6 +23,6 @@ public class SdkVersionUtils {
      * @return
      */
     public static boolean checkedAndroid_R() {
-        return Build.VERSION.SDK_INT >= 30;
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R;
     }
 }

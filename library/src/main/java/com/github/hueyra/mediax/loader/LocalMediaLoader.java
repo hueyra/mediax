@@ -1,4 +1,4 @@
-package com.github.hueyra.mediax.model;
+package com.github.hueyra.mediax.loader;
 
 import android.content.Context;
 import android.database.Cursor;
