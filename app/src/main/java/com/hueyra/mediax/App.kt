@@ -17,6 +17,7 @@ import com.github.hueyra.mediax.listener.OnResultCallbackListener
  */
 class App : Application(), IMediaXApp {
 
+
     override fun onCreate() {
         super.onCreate()
         MediaXAppInitializer.getInstance().init(this)
